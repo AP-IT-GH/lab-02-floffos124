@@ -16,13 +16,14 @@ public class FollowWaypoint : MonoBehaviour
 
         Transform target = waypoints[currentWaypoint];
 
-        // Alleen horizontale richting
+        // Doelpositie op dezelfde hoogte houden
         Vector3 targetPos = target.position;
         targetPos.y = transform.position.y;
 
+        // Richting berekenen
         Vector3 direction = targetPos - transform.position;
 
-        // Rotatie
+        // Smooth draaien
         if (direction != Vector3.zero)
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -33,15 +34,18 @@ public class FollowWaypoint : MonoBehaviour
             );
         }
 
-        // Beweging zonder vliegen
+        // Bewegen naar waypoint
         transform.position = Vector3.MoveTowards(
             transform.position,
             targetPos,
             speed * Time.deltaTime
         );
 
-        // Check waypoint bereikt
-        if (Vector3.Distance(transform.position, targetPos) < waypointDistance)
+        // Check of waypoint bereikt of voorbij gereden
+        Vector3 toWaypoint = targetPos - transform.position;
+
+        if (toWaypoint.magnitude < waypointDistance ||
+            Vector3.Dot(transform.forward, toWaypoint) < 0)
         {
             currentWaypoint++;
 
