@@ -937,7 +937,7 @@ MonoBehaviour:
   - {fileID: 1530991395}
   speed: 5
   rotSpeed: 5
-  waypointDistance: 1
+  waypointDistance: 2
   loop: 1
 --- !u!1001 &1442623060
 PrefabInstance:

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class FollowWaypoint : MonoBehaviour
 {
-    public Transform[] waypoints;   // Alle punten: Start -> Path -> End
+    public Transform[] waypoints;
     public float speed = 5f;
     public float rotSpeed = 5f;
     public float waypointDistance = 1f;
-    public bool loop = true;         // Zet uit als je wil stoppen bij End
+    public bool loop = true;
 
     private int currentWaypoint = 0;
 
@@ -16,26 +16,32 @@ public class FollowWaypoint : MonoBehaviour
 
         Transform target = waypoints[currentWaypoint];
 
-        // Richting naar waypoint
-        Vector3 direction = target.position - transform.position;
-        direction.y = 0f;
+        // Alleen horizontale richting
+        Vector3 targetPos = target.position;
+        targetPos.y = transform.position.y;
 
-        // Smooth rotation
+        Vector3 direction = targetPos - transform.position;
+
+        // Rotatie
         if (direction != Vector3.zero)
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 lookRotation,
-                Time.deltaTime * rotSpeed
+                rotSpeed * Time.deltaTime
             );
         }
 
-        // Voorwaartse beweging
-        transform.Translate(0, 0, speed * Time.deltaTime);
+        // Beweging zonder vliegen
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPos,
+            speed * Time.deltaTime
+        );
 
-        // Check afstand tot waypoint
-        if (Vector3.Distance(transform.position, target.position) < waypointDistance)
+        // Check waypoint bereikt
+        if (Vector3.Distance(transform.position, targetPos) < waypointDistance)
         {
             currentWaypoint++;
 
@@ -44,7 +50,7 @@ public class FollowWaypoint : MonoBehaviour
                 if (loop)
                     currentWaypoint = 0;
                 else
-                    enabled = false; // stopt bij End
+                    enabled = false;
             }
         }
     }
