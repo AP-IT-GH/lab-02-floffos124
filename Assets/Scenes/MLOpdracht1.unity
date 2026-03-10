@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e660c27b586df447b121bc88ae6b3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalDetect
-  agent: {fileID: 1890709012}
+  agent: {fileID: 1890709020}
 --- !u!1 &788824934
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4206394396158677602, guid: abd6c8be9cd9119419fe27a28044f9d0, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 6
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4717627711378208314, guid: abd6c8be9cd9119419fe27a28044f9d0, type: 3}
       propertyPath: m_TagString
@@ -619,7 +619,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8681076653748732894, guid: abd6c8be9cd9119419fe27a28044f9d0, type: 3}
       insertIndex: 5
-      addedObject: {fileID: 1890709012}
+      addedObject: {fileID: 1890709020}
     - targetCorrespondingSourceObject: {fileID: 8681076653748732894, guid: abd6c8be9cd9119419fe27a28044f9d0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1890709010}
@@ -660,7 +660,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2632132594654335399, guid: abd6c8be9cd9119419fe27a28044f9d0, type: 3}
   m_PrefabInstance: {fileID: 1890709006}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1890709012
+--- !u!114 &1890709020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -669,16 +669,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1890709008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08663c9ab8c257f4ab3dc57aef2d12e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 396aff6d837fa5b418ae82873567adf6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CubeAgentZone
+  m_EditorClassIdentifier: Assembly-CSharp::CubeAgentPushShaped
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 5000
   TargetBlock: {fileID: 335492962}
   GreenZone: {fileID: 788824935}
-  speedMultiplier: 0.5
+  speedMultiplier: 0.2
   rotationMultiplier: 5
 --- !u!1 &2095188168
 GameObject:
