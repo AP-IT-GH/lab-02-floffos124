@@ -1,0 +1,38 @@
+{
+    "Obelix": {
+        "checkpoints": [
+            {
+                "steps": 499976,
+                "file_path": "results\\Obelix_v2\\Obelix\\Obelix-499976.onnx",
+                "reward": 6.551594850089815,
+                "creation_time": 1773759978.9866393,
+                "auxillary_file_paths": [
+                    "results\\Obelix_v2\\Obelix\\Obelix-499976.pt"
+                ]
+            },
+            {
+                "steps": 525227,
+                "file_path": "results\\Obelix_v2\\Obelix\\Obelix-525227.onnx",
+                "reward": null,
+                "creation_time": 1773760060.478613,
+                "auxillary_file_paths": [
+                    "results\\Obelix_v2\\Obelix\\Obelix-525227.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 525227,
+            "file_path": "results\\Obelix_v2\\Obelix.onnx",
+            "reward": null,
+            "creation_time": 1773760060.478613,
+            "auxillary_file_paths": [
+                "results\\Obelix_v2\\Obelix\\Obelix-525227.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cpu"
+    }
+}

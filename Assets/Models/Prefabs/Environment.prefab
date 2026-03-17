@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
   m_BrainParameters:
-    VectorObservationSize: 4
+    VectorObservationSize: 2
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -188,9 +188,12 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 20000
   menhirPrefab: {fileID: 7428698136860058107, guid: c155319fbadd3514cbc0848717d85690, type: 3}
   destinationPrefab: {fileID: 3008775665920012572, guid: 304ca20cb09a3b04481501ab6e740639, type: 3}
+  spawnAmount: 6
+  moveSpeed: 5
+  turnSpeed: 150
 --- !u!114 &8820198451244949843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,8 +210,8 @@ MonoBehaviour:
   m_DetectableTags:
   - Menhir
   - Destination
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 70
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 140
   m_SphereCastRadius: 0.5
   m_RayLength: 20
   m_RayLayerMask:
