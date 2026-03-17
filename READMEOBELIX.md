@@ -23,8 +23,12 @@ De logica van de agent is geïmplementeerd via de volgende kernfuncties:
 De trainingsresultaten zijn geanalyseerd via TensorBoard, waarbij twee verschillende scenario's zijn getoetst:
 
 * Scenario A (Eén object): De initiële test met één Menhir (weergegeven door de groene grafiek Obelix_v1) toont een snelle stijging in de cumulatieve beloning. Na ongeveer 40.000 stappen stabiliseert de score zich rond een waarde van 2.0.
+<img width="1918" height="877" alt="image" src="https://github.com/user-attachments/assets/9d7a4a9d-de59-4bef-90d2-bd5b7946df60" />
 
 * Scenario B (Zes objecten): Bij de uitgebreide test met zes Menhirs (weergegeven door de oranje grafiek Obelix_v2) bereikt de cumulatieve beloning een waarde boven de 6.0 na 500.000 stappen. De Episode Length grafiek vertoont een significante daling na 200.000 stappen, wat duidt op een toename in efficiëntie. De Policy Loss vertoont fluctuaties tussen 0.022 en 0.027, terwijl de Value Loss een stijgende lijn vertoont naarmate de agent meer complexe beloningen identificeert.
+<img width="1597" height="862" alt="image" src="https://github.com/user-attachments/assets/c793ad43-9a37-4ebb-a805-e0adf0e47cff" />
+<img width="1043" height="805" alt="image" src="https://github.com/user-attachments/assets/281f0fb8-e998-4045-aa4c-e01f1055a7ba" />
+<img width="1591" height="857" alt="image" src="https://github.com/user-attachments/assets/3bbec719-3041-495c-b154-f97c970a2df5" />
 
 ## Conclusie
 Op basis van de observaties kan worden geconcludeerd dat de agent succesvol in staat is om complexe, sequentiële taken aan te leren. De stabilisatie van de cumulatieve beloning bij de waarde 6.0 in het tweede scenario bewijst dat de agent consistent alle zes de objecten aflevert. De afname in episodelengte suggereert dat de agent niet alleen de taak voltooit, maar ook optimaliseert voor snelheid om tijdsgerelateerde straffen te minimaliseren. Het gebruik van Ray Perception Sensors blijkt essentieel voor navigatie in omgevingen met een hoge densiteit aan objecten.
