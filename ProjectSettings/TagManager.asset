@@ -9,6 +9,8 @@ TagManager:
   - marker
   - Target
   - Zone
+  - Menhir
+  - Destination
   layers:
   - Default
   - TransparentFX
