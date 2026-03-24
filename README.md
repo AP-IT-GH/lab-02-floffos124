@@ -49,6 +49,9 @@ We zien een hogere Value Loss bij v3 (0,0898) vergeleken met v2 (0,0629). Dit is
 ## Conclusie
 Op basis van de observaties kan worden geconcludeerd dat de agent succesvol in staat is om complexe, sequentiële taken aan te leren. De stabilisatie van de cumulatieve beloning bij de waarde 6.0 in het tweede scenario bewijst dat de agent consistent alle zes de objecten aflevert. De afname in episodelengte suggereert dat de agent niet alleen de taak voltooit, maar ook optimaliseert voor snelheid om tijdsgerelateerde straffen te minimaliseren. Het gebruik van Ray Perception Sensors blijkt essentieel voor navigatie in omgevingen met een hoge densiteit aan objecten.
 
+### Vergelijking van de 3 scenarios:
+<img width="982" height="615" alt="image" src="https://github.com/user-attachments/assets/2fda30dd-3b9f-4948-9c23-a8d267cf9cb9" />
+
 ## Referenties
 Unity Technologies (2024) ML-Agents Toolkit Documentation. https://github.com/Unity-Technologies/ml-agents
 
