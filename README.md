@@ -30,6 +30,21 @@ De trainingsresultaten zijn geanalyseerd via TensorBoard, waarbij twee verschill
 <img width="1043" height="805" alt="image" src="https://github.com/user-attachments/assets/281f0fb8-e998-4045-aa4c-e01f1055a7ba" />
 <img width="1591" height="857" alt="image" src="https://github.com/user-attachments/assets/3bbec719-3041-495c-b154-f97c970a2df5" />
 
+*Scenario C (Afstraffing voor te blijven hangen): Door dat ik een afstraffing heb toegevoegd aan het script, leert het Obelix_v3 model veel sneller.
+### Cumulative Reward:
+<img width="1582" height="732" alt="image" src="https://github.com/user-attachments/assets/cb987c1f-e82e-40f1-9f5b-b5e745cb7f83" />
+Bij 520.000 stappen behaalt Obelix_v3 een aanzienlijk hogere gemiddelde beloning van 708,32, vergeleken met 526,81 voor Obelix_v2. Dit is een stijging van ongeveer 34% in totale verzamelde beloningen per episode.
+
+### Episode Length:
+<img width="1581" height="557" alt="image" src="https://github.com/user-attachments/assets/f7b2af37-fc95-4db8-a23a-2e0b8fb4e419" />
+De grafiek laat zien dat Obelix_v3 de taken sneller voltooit. Waar Obelix_v2 vaak langer blijft hangen in episodes (wat duidt op het 'vastlopen' bij balken), vertoont v3 een stabielere neerwaartse trend in de tijd die nodig is om de 6 menhirs af te leveren.
+
+### Policy Loss: 
+<img width="1580" height="555" alt="image" src="https://github.com/user-attachments/assets/a55c8397-ff38-4415-b1bc-08a999c40367" />
+De Policy Loss van v3 is met 0,0228 iets lager en stabieler dan die van v2 (0,0245). Dit wijst erop dat de agent meer zelfvertrouwen heeft in de gekozen acties om het doel te bereiken.
+### Value Loss: 
+We zien een hogere Value Loss bij v3 (0,0898) vergeleken met v2 (0,0629). Dit is logisch en zelfs positief in deze context: omdat we de beloningsstructuur complexer hebben gemaakt met afstandsbeloningen, is het voor de agent in het begin lastiger om de exacte waarde van een situatie te voorspellen, maar dit leidt uiteindelijk tot een veel beter eindresultaat.
+
 ## Conclusie
 Op basis van de observaties kan worden geconcludeerd dat de agent succesvol in staat is om complexe, sequentiële taken aan te leren. De stabilisatie van de cumulatieve beloning bij de waarde 6.0 in het tweede scenario bewijst dat de agent consistent alle zes de objecten aflevert. De afname in episodelengte suggereert dat de agent niet alleen de taak voltooit, maar ook optimaliseert voor snelheid om tijdsgerelateerde straffen te minimaliseren. Het gebruik van Ray Perception Sensors blijkt essentieel voor navigatie in omgevingen met een hoge densiteit aan objecten.
 
