@@ -47,9 +47,17 @@ De Policy Loss van v3 is met 0,0228 iets lager en stabieler dan die van v2 (0,02
 We zien een hogere Value Loss bij v3 (0,0898) vergeleken met v2 (0,0629). Dit is logisch en zelfs positief in deze context: omdat we de beloningsstructuur complexer hebben gemaakt met afstandsbeloningen, is het voor de agent in het begin lastiger om de exacte waarde van een situatie te voorspellen, maar dit leidt uiteindelijk tot een veel beter eindresultaat.
 
 ## Conclusie
-Op basis van de observaties kan worden geconcludeerd dat de agent succesvol in staat is om complexe, sequentiële taken aan te leren. De stabilisatie van de cumulatieve beloning bij de waarde 6.0 in het tweede scenario bewijst dat de agent consistent alle zes de objecten aflevert. De afname in episodelengte suggereert dat de agent niet alleen de taak voltooit, maar ook optimaliseert voor snelheid om tijdsgerelateerde straffen te minimaliseren. Het gebruik van Ray Perception Sensors blijkt essentieel voor navigatie in omgevingen met een hoge densiteit aan objecten.
+Op basis van de verzamelde data uit de drie opeenvolgende scenario's kan worden geconcludeerd dat de Obelix-agent een significante evolutie heeft doorgemaakt in zowel leervermogen als operationele efficiëntie.
+Waar de initiële tests (Scenario A) aantoonden dat de agent de basislogica van "oppakken en afleveren" kon begrijpen, legde de opschaling naar zes objecten (Scenario B) de beperkingen van een passieve beloningsstructuur bloot. Hoewel de agent in v2 de taak voltooide, bleek uit de fluctuaties in de Episode Length dat de agent vaak vast kwam te staan of inefficiënte paden koos zodra de directe visuele prikkel van een Menhir ontbrak.
 
-### Vergelijking van de 3 scenarios:
+De introductie van Scenario C (Obelix_v3) vormt de belangrijkste doorbraak in dit onderzoek. Door de implementatie van Shaped Rewards (afstandsbeloningen) en een actieve bestraffing voor inactiviteit, is de agent getransformeerd van een reactieve naar een proactieve navigator:
+* Efficiëntiewinst: De stijging van 34% in de cumulatieve beloning en de scherpere daling in de Episode Length bewijzen dat de agent niet langer "per toeval" tegen objecten aanloopt, maar doelgericht naar Menhirs en doelen navigeert.
+* Gedragsoptimalisatie: De lagere en stabielere Policy Loss in v3 bevestigt dat de agent met meer zekerheid beslissingen neemt. De hogere Value Loss is hierbij een indicator van een rijkere leeromgeving; de agent verwerkt complexere feedback over zijn positie in de ruimte, wat resulteert in superieur adaptief gedrag.
+* Robuustheid: De stabilisatie van de resultaten in v3 toont aan dat de agent succesvol heeft geleerd om tijdsgerelateerde straffen te minimaliseren door continue beweging en optimale padvinding.
+
+Samengevat: alleen een beloning geven aan het eind is voor een agent in Unity niet genoeg om echt slim te worden. Zonder extra hulp blijft hij te vaak doelloos rondhangen en vastzitten. Door de Ray Perception Sensors (ogen van de Agent) te combineren met Shaped Rewards (beloningssysteem), heb ik een Obelix-agent gecreëerd die niet alleen weet wat hij moet doen, maar ook direct de snelste weg naar zijn doel vindt.
+
+### Vergelijking van de 3 scenario's:
 <img width="982" height="615" alt="image" src="https://github.com/user-attachments/assets/2fda30dd-3b9f-4948-9c23-a8d267cf9cb9" />
 
 ## Referenties
