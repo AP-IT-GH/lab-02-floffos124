@@ -19,57 +19,60 @@ public class ObelixAgent : Agent
     private int deliveredCount = 0;
     private List<GameObject> spawnedObjects = new List<GameObject>();
 
+    // Voor afstandsbeloningen
+    private float lastDistance;
+
     public override void OnEpisodeBegin()
     {
-        // 1. Reset variabelen
         hasMenhir = false;
         deliveredCount = 0;
 
-        // 2. Ruim alle oude objecten (menhirs en destinations) op
         foreach (var obj in spawnedObjects)
         {
             if (obj != null) Destroy(obj);
         }
         spawnedObjects.Clear();
 
-        // 3. Spawn nieuwe Menhirs
         for (int i = 0; i < spawnAmount; i++)
         {
             Vector3 randomPos = new Vector3(Random.Range(-4f, 4f), 1f, Random.Range(-4f, 4f));
             GameObject m = Instantiate(menhirPrefab, randomPos + transform.parent.position, Quaternion.identity, transform.parent);
+            m.tag = "Menhir"; // Zorg dat de tag klopt
             spawnedObjects.Add(m);
         }
 
-        // 4. Spawn nieuwe Destinations
         for (int i = 0; i < spawnAmount; i++)
         {
             Vector3 randomPos = new Vector3(Random.Range(-4f, 4f), 0.5f, Random.Range(-4f, 4f));
             GameObject d = Instantiate(destinationPrefab, randomPos + transform.parent.position, Quaternion.identity, transform.parent);
+            d.tag = "Destination"; // Zorg dat de tag klopt
             spawnedObjects.Add(d);
         }
 
-        // 5. Reset Obelix positie
         this.transform.localPosition = new Vector3(0, 0.5f, 0);
         this.transform.localRotation = Quaternion.identity;
+
+        // Initialiseer eerste afstand
+        UpdateLastDistance();
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Observatie 1: Heeft hij een menhir vast? (0 of 1)
         sensor.AddObservation(hasMenhir ? 1f : 0f);
-
-        // Observatie 2: Hoeveel procent van de taak is voltooid? (0.0 tot 1.0)
-        // Dit helpt de AI begrijpen dat de episode nog niet klaar is.
         sensor.AddObservation((float)deliveredCount / spawnAmount);
-
-        // TOTAAL SPACE SIZE IN UNITY: 2
+        // TOTAAL SPACE SIZE: 2
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        // --- ACTIES ---
-        int moveAction = actionBuffers.DiscreteActions[0]; // 0: niks, 1: voor, 2: achter
-        int rotateAction = actionBuffers.DiscreteActions[1]; // 0: niks, 1: links, 2: rechts
+        int moveAction = actionBuffers.DiscreteActions[0];
+        int rotateAction = actionBuffers.DiscreteActions[1];
+
+        // Straf voor inactiviteit
+        if (moveAction == 0 && rotateAction == 0)
+        {
+            AddReward(-0.001f); // Kleine straf als hij niks doet
+        }
 
         // Bewegen
         Vector3 move = Vector3.zero;
@@ -83,42 +86,78 @@ public class ObelixAgent : Agent
         else if (rotateAction == 2) rotation = 1f;
         transform.Rotate(Vector3.up, rotation * Time.deltaTime * turnSpeed);
 
-        // --- BELONINGEN ---
-        // Kleine straf per stap om snelheid te stimuleren
+        // Shaped Reward: Afstand
+        float currentDistance = GetDistanceToTarget();
+        if (currentDistance < lastDistance)
+        {
+            AddReward(0.001f); // Bonus voor dichterbij komen
+        }
+        else if (currentDistance > lastDistance)
+        {
+            AddReward(-0.001f); // Straf voor verder weg gaan
+        }
+        lastDistance = currentDistance;
+
+        // Tijdstraf
         AddReward(-1f / MaxStep);
 
-        // Straf als hij van het platform valt
+        // Valstraf
         if (transform.localPosition.y < 0)
         {
-            AddReward(-1.0f);
+            SetReward(-1.0f);
             EndEpisode();
         }
     }
 
+    private float GetDistanceToTarget()
+    {
+        GameObject closest = null;
+        float minDist = Mathf.Infinity;
+        string targetTag = hasMenhir ? "Destination" : "Menhir";
+
+        // Zoek het dichtstbijzijnde actieve doelwit
+        foreach (GameObject obj in spawnedObjects)
+        {
+            if (obj != null && obj.activeInHierarchy && obj.CompareTag(targetTag))
+            {
+                float dist = Vector3.Distance(transform.position, obj.transform.position);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    closest = obj;
+                }
+            }
+        }
+        return minDist;
+    }
+
+    private void UpdateLastDistance()
+    {
+        lastDistance = GetDistanceToTarget();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        // 1. Botsen met Menhir
         if (collision.gameObject.CompareTag("Menhir") && !hasMenhir)
         {
             hasMenhir = true;
-            AddReward(0.3f); // Beloning voor oppakken
-            collision.gameObject.SetActive(false); // Menhir verdwijnt ("op de rug")
+            AddReward(0.5f); // Iets hogere beloning voor oppakken
+            collision.gameObject.SetActive(false);
+            UpdateLastDistance(); // Reset afstand naar nieuwe target (Destination)
         }
 
-        // 2. Botsen met Destination
         if (collision.gameObject.CompareTag("Destination") && hasMenhir)
         {
-            hasMenhir = false; // Obelix is weer vrij
-            deliveredCount++;  // Teller ophogen
+            hasMenhir = false;
+            deliveredCount++;
+            AddReward(0.8f);
+            collision.gameObject.SetActive(false);
+            UpdateLastDistance(); // Reset afstand naar nieuwe target (volgende Menhir)
 
-            AddReward(0.7f); // Beloning voor succesvolle aflevering
-            collision.gameObject.SetActive(false); // Bestemming verdwijnt (is "gevuld")
-
-            // Check of alle 6 menhirs zijn afgeleverd
             if (deliveredCount >= spawnAmount)
             {
-                AddReward(1.0f); // Grote bonus voor volledige taak
-                EndEpisode();    // NU pas de episode beëindigen
+                SetReward(2.0f); // Bonus voor alles klaar
+                EndEpisode();
             }
         }
     }
@@ -126,14 +165,7 @@ public class ObelixAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var discreteActions = actionsOut.DiscreteActions;
-        // Vooruit/Achteruit
-        if (Input.GetKey(KeyCode.W)) discreteActions[0] = 1;
-        else if (Input.GetKey(KeyCode.S)) discreteActions[0] = 2;
-        else discreteActions[0] = 0;
-
-        // Draaien
-        if (Input.GetKey(KeyCode.A)) discreteActions[1] = 1;
-        else if (Input.GetKey(KeyCode.D)) discreteActions[1] = 2;
-        else discreteActions[1] = 0;
+        discreteActions[0] = Input.GetKey(KeyCode.W) ? 1 : (Input.GetKey(KeyCode.S) ? 2 : 0);
+        discreteActions[1] = Input.GetKey(KeyCode.A) ? 1 : (Input.GetKey(KeyCode.D) ? 2 : 0);
     }
 }
