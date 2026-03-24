@@ -42,6 +42,7 @@ De grafiek laat zien dat Obelix_v3 de taken sneller voltooit. Waar Obelix_v2 vaa
 ### Policy Loss: 
 <img width="1580" height="555" alt="image" src="https://github.com/user-attachments/assets/a55c8397-ff38-4415-b1bc-08a999c40367" />
 De Policy Loss van v3 is met 0,0228 iets lager en stabieler dan die van v2 (0,0245). Dit wijst erop dat de agent meer zelfvertrouwen heeft in de gekozen acties om het doel te bereiken.
+
 ### Value Loss: 
 We zien een hogere Value Loss bij v3 (0,0898) vergeleken met v2 (0,0629). Dit is logisch en zelfs positief in deze context: omdat we de beloningsstructuur complexer hebben gemaakt met afstandsbeloningen, is het voor de agent in het begin lastiger om de exacte waarde van een situatie te voorspellen, maar dit leidt uiteindelijk tot een veel beter eindresultaat.
 
