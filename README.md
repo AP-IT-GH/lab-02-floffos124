@@ -30,7 +30,7 @@ De trainingsresultaten zijn geanalyseerd via TensorBoard, waarbij twee verschill
 <img width="1043" height="805" alt="image" src="https://github.com/user-attachments/assets/281f0fb8-e998-4045-aa4c-e01f1055a7ba" />
 <img width="1591" height="857" alt="image" src="https://github.com/user-attachments/assets/3bbec719-3041-495c-b154-f97c970a2df5" />
 
-* Scenario C (Afstraffing voor te blijven hangen): Door dat ik een afstraffing heb toegevoegd aan het script, leert het Obelix_v3 model veel sneller.
+* Scenario C (Afstraffing voor te blijven hangen): Door dat ik een afstraffing heb toegevoegd aan het script, zodat de Agent niet blijft hangen bij een Menhir object, leert het Obelix_v3 model beter dan het Obelix_v2 model.
 ### Cumulative Reward:
 <img width="1582" height="732" alt="image" src="https://github.com/user-attachments/assets/cb987c1f-e82e-40f1-9f5b-b5e745cb7f83" />
 Bij 520.000 stappen behaalt Obelix_v3 een aanzienlijk hogere gemiddelde beloning van 708,32, vergeleken met 526,81 voor Obelix_v2. Dit is een stijging van ongeveer 34% in totale verzamelde beloningen per episode.
